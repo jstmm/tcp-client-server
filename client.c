@@ -5,6 +5,31 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include "protocol.h"
+
+void handle_server_response(int server_fd) {
+	char buffer[4096] = {0};
+	proto_hdr_t *header = (proto_hdr_t*)buffer;
+	read(server_fd, header, sizeof(proto_hdr_t) + sizeof(int));
+    // Waiting for response from server
+
+	header->type = ntohl(header->type);
+	header->length = ntohs(header->length);
+	int *data = (int*)&header[1];
+	*data = ntohl(*data);
+
+    if (header->type != PROTO_HELLO) {
+        printf("Protocol mismatch, failing\n");
+        return;
+    }
+	if (*data != 1) {
+		printf("Protocol version mismatch, failing\n");
+		return;
+	}
+
+	return;
+}
+
 int main(int argc, char** argv)
 {
     if (argc != 2) {
@@ -28,7 +53,8 @@ int main(int argc, char** argv)
         return 0;
     }
     printf("Connection made\n");
-    sleep(2);
+
+    handle_server_response(server_fd);
 
     close(server_fd);
     return 0;

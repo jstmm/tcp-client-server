@@ -4,6 +4,25 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdbool.h>
+
+#include "protocol.h"
+
+void write_to_client(int client_fd) {
+	char buffer[4096] = {0};
+	proto_hdr_t *header = (proto_hdr_t*)buffer;
+
+	header->type = htonl(PROTO_HELLO);
+    header->length = sizeof(int);
+	int real_length = header->length;
+	header->length = htons(header->length);
+
+    int* data = (int*)&header[1];
+	*data = htonl(1);
+
+	write(client_fd, header, sizeof(proto_hdr_t) + real_length);
+    printf("Write\n");
+}
 
 int main(void)
 {
@@ -28,19 +47,23 @@ int main(void)
         return 0;
     }
 
-    socklen_t client_addr_len = sizeof(client_info);
-    printf("Ready to accept\n");
+    while (true) {
+        socklen_t client_addr_len = sizeof(client_info);
+        printf("Ready to accept\n");
 
-    int client_fd = accept(server_fd, (struct sockaddr*)&client_info, &client_size);
+        int client_fd = accept(server_fd, (struct sockaddr*)&client_info, &client_size);
+        // Wait here
 
-    if (client_fd == -1) {
-        perror("accept");
-        return 0;
+        if (client_fd == -1) {
+            perror("accept");
+            return 0;
+        }
+
+        printf("Connection made\n");
+        write_to_client(client_fd);
+        close(client_fd);
     }
 
-    printf("Connection made\n");
-    sleep(4);
-    close(client_fd);
     close(server_fd);
     return 0;
 }

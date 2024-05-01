@@ -4,14 +4,22 @@ TCP connection between client and server programs using glibc's socket implement
 
 ## Usage
 
+Build using:
+
+```bash
+$ make
+```
+
 Start server with:
 
 ```bash
-$ ./start_server
+$ ./start.sh server
 ```
 
 And client with:
 
 ```bash
-$ ./start_client
+$ ./start.sh client
 ```
+
+Debugging can be done using VSCode launch configurations
