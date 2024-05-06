@@ -5,7 +5,31 @@
       "name": "Debug Server",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/server",
+      "program": "${workspaceFolder}/build/server",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+          {
+              "description": "Enable pretty-printing for gdb",
+              "text": "-enable-pretty-printing",
+              "ignoreFailures": true
+          },
+          {
+              "description": "Set Disassembly Flavor to Intel",
+              "text": "-gdb-set disassembly-flavor intel",
+              "ignoreFailures": true
+          }
+      ]
+    },
+    {
+      "name": "Debug Server - Select",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/server_select",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
@@ -29,7 +53,7 @@
       "name": "Debug Client",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/bin/client",
+      "program": "${workspaceFolder}/build/client",
       "args": ["127.0.0.1"],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",

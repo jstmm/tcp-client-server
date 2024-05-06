@@ -2,7 +2,7 @@
 
 TCP connection between client and server programs using glibc's socket implementation
 
-## Usage
+## Install
 
 Build using:
 
@@ -10,16 +10,32 @@ Build using:
 $ make
 ```
 
+### Single connection 
 Start server with:
 
 ```bash
-$ ./start.sh server
+$ ./build/server
 ```
 
 And client with:
 
 ```bash
-$ ./start.sh client
+$ ./build/client 127.0.0.1
 ```
 
-Debugging can be done using VSCode launch configurations
+### Multi-connection using select()
+Start server with:
+
+```bash
+$ ./build/server_select
+```
+
+And client with:
+
+```bash
+$ nc 127.0.0.1 5555 # TODO: to replace with client executable
+```
+
+Then type the text to be sent.
+
+Debugging can be done using VSCode launch configurations.

@@ -2,11 +2,11 @@
 .SUFFIXES:
 
 default:
-	mkdir -p bin
-	gcc -g -o bin/server server.c
-	gcc -g -o bin/client client.c
-	gcc -g -o bin/server_select_multi server_select_multi.c
+	mkdir -p build
+	gcc -g -o ./build/server ./src/server.c
+	gcc -g -o ./build/client ./src/client.c
+	gcc -g -o ./build/server_select ./src/server_select.c
 
 .PHONY: clean
 clean:
-	rm -f bin/*
+	rm -f ./build/*

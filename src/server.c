@@ -1,11 +1,7 @@
-#include <arpa/inet.h>
 #include <netinet/in.h>
 #include <stdio.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdbool.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "protocol.h"
 
@@ -50,7 +46,7 @@ int main(void)
         exit(EXIT_FAILURE);
     }
 
-    while (true) {
+    while (1) {
         client_addr_size = sizeof(client_addr);
         printf("Ready to accept\n");
         client_fd = accept(server_fd, (struct sockaddr *) &client_addr, &client_addr_size);
